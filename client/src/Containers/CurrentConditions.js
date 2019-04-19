@@ -1,8 +1,10 @@
-import React, { Component, } from 'react';
+import React from 'react';
 
 // import NearestStorm from '../Components/CurrentConditions/NearestStorm';
 import Temperature from '../Components/CurrentConditions/Temperature';
 import WeatherConditions from '../Components/CurrentConditions/WeatherConditions';
+
+import './CurrentConditions.scss';
 
 const CurrentConditions = (props) => {
 	const {
@@ -11,8 +13,7 @@ const CurrentConditions = (props) => {
 	} = props;
 	
 	return (
-		<div className = "at-a-glance">
-			<div>
+		<div className = "current-conditions">
 				<Temperature 
 					temperature={temperature}
 				/>
@@ -25,9 +26,6 @@ const CurrentConditions = (props) => {
 					nearestStormDirection={nearestStormDirection}
 					nearestStormDistance={nearestStormDistance}
 				/> */}
-
-				
-			</div>
 		</div>
 	);
 };

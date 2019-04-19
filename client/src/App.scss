@@ -1,0 +1,21 @@
+@import './mixins/theme';
+@import './mixins/flex';
+@import './mixins/decoration';
+
+
+.App {
+  @include flex-column;
+
+  background: $background-color;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  
+  padding: 2rem;
+}
+
+@media screen and (min-width: $breakpoint-s) {
+  .App {
+    width: 30vw;
+  }
+}

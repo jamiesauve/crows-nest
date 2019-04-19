@@ -1,17 +1,31 @@
 import React from 'react';
-import { WiCloud } from 'weather-icons-react';
+
+import getWeatherIconComponent from '../../Utils/getWeatherIconComponent';
+
+import './WeatherConditions.scss';
 
 const WeatherConditions = (props) => {
+	const Component = getWeatherIconComponent(props.weatherConditions);
+
 	return (
 		<div className = "weather-conditions">
-			{props.weatherConditions}
-			<WiCloud 
-				size={24}
-				color="#000"
-			/>
-			&#9650;
-			&#9660;
-			&#9679;
+			<Component 
+				size={48}
+				color="#fff"
+				/>
+
+			<div className = "weather-conditions__direction-symbol__falling">
+				&#9660;
+			</div>
+
+			{/* 
+			// in a tooltip
+			<div className = "weather-conditions__label">
+				{props.weatherConditions}
+			</div>	 */}
+
+			{/* &#9650; */}
+			{/* &#9679; */}
 		</div>
 	);
 };

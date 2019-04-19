@@ -1,0 +1,33 @@
+@import './mixins/theme';
+@import './mixins/flex';
+
+html * {
+  box-sizing: border-box;
+}
+
+body {
+  color: $text-color;
+  font-size: $font-size-m;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+  margin: 0;
+  padding: 0;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  @include flex-center;
+
+  height: 100vh;
+  width: 100vw;
+
+  background: $background-color;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace; 
+}

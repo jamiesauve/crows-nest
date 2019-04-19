@@ -1,5 +1,6 @@
 import React from 'react';
 // import moment from 'moment';
+import './Orientation.scss';
 
 const Orientation = (props) => {
 	const formatDate = (date) => {

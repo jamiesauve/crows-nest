@@ -37,8 +37,17 @@ app.get('/api/getWeather', (req, res) => {
 		`${lat},${lng}?exclude=minutely,daily`,
 	).then((payload) => {
 
-		res.send(payload.data);
-	}).catch((e) => console.log('there was an error in the DarkSky call :('));
+		res.send({
+			data: payload.data,
+			error: false,
+		});
+	}).catch((e) => {
+		console.log('there was an error in the DarkSky call :(');
+		res.send({
+			data: null,
+			error: true
+		})
+	});
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

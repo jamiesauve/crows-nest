@@ -1,0 +1,23 @@
+@import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/section';
+@import '../mixins/decoration';
+
+.update {
+	@include section-width;
+	@include flex-row;
+
+	font-size: $font-size-s;
+
+	.update__button {
+		@include soft-border;
+
+		color: $text-color;
+		font-size: $font-size-m;
+	}
+}
+
+.update__error-message {
+	background: $warning-color;
+	font-size: $font-size-s;
+}

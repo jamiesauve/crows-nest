@@ -1,0 +1,23 @@
+@import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/section';
+
+.orientation {
+	@include section-width;
+	@include flex-column;
+
+	.orientation__location {
+		@include flex-row;
+		font-size: $font-size-l;
+		font-weight: 700;
+	}
+
+	.orientation__section1 {
+		@include flex-row;
+
+		& > div {
+			padding: .1rem 1rem;
+			font-size: $font-size-s;
+		}
+	}
+}

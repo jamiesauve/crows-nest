@@ -1,0 +1,8 @@
+@import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/section';
+
+.hourly {
+	@include section-width;
+	@include flex-column;
+}

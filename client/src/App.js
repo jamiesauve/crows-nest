@@ -3,10 +3,13 @@ import {pick as _pick, } from 'lodash';
 import axios from 'axios';
 
 
-import './App.css';
+import './App.scss';
 import Orientation from './Containers/Orientation';
 import CurrentConditions from './Containers/CurrentConditions';
 import Hourly from './Containers/Hourly';
+import Alerts from './Containers/Alerts';
+import Update from './Containers/Update';
+import SectionDivider from './Components/Utility/SectionDivider';
 
 class App extends Component {
   constructor() {
@@ -16,16 +19,17 @@ class App extends Component {
 			currentConditions: {
 				temperature: undefined,
 				isTemperatureRising: false,
-
+				
 				// nearestStormDirection: undefined,
 				// nearestStormDistance: undefined,
 			},
+			errorMessage: '',
 			updateInterval: 180000, // 3 minutes
-			isLoading: true,
+			isLoading: true, // TODO use React.lazy instead of this
 			location: {
-				//St Charles, MO - not correct?
+				//St Charles, MO
 				lng: -90.497,
-				lat: -38.788,
+				lat: 38.788,
 			},
 			data: {},
 		}
@@ -62,32 +66,40 @@ class App extends Component {
 				'Content-Type': 'application/json',
 			},
 		}).then((payload) => {
-			// pull bits I need off of the payload
-			const currentConditions = _pick(payload.data.currently, [
-        'temperature',
-        'icon'
-				// 'nearestStormDirection',
-				// 'nearestStormDistance',
-			])
+			console.log('payload', payload);
+			if(payload.data.error) {
+				this.setState({
+					errorMessage: 'Could not update weather - no internet connection',
+				})
+			} else {
+				// pull bits I need off of the payload
+				const currentConditions = _pick(payload.data.data.currently, [
+					'temperature',
+					'icon'
+					// 'nearestStormDirection',
+					// 'nearestStormDistance',
+				])
+	
+				this.setState({
+					currentConditions: {
+						temperature: currentConditions.temperature,
+						weatherConditions: currentConditions.icon,
+						// TODO add temperatureChange (rising/falling/steady) - will require time machine
+						// TODO add pressureChange (rising/falling/steady)
+					}
+				});
+			}
 
-			this.setState({
-        currentConditions: {
-          temperature: currentConditions.temperature,
-          weatherConditions: currentConditions.icon,
-          // TODO add temperatureChange (rising/falling/steady) - will require time machine
-          // TODO add pressureChange (rising/falling/steady)
-        }
-			});
 		})
-	}
+	};
 
 	render() {
 		const {
-			isLoading,
-		} = this.props;
+			errorMessage,
+		} = this.state;
 
 		const {
-      temperature,
+			temperature,
       weatherConditions,
 			// nearestStormDirection,
 			// nearestStormDistance,
@@ -101,12 +113,26 @@ class App extends Component {
           time="8:00 PM"
         />
         
+				<SectionDivider />
+
         <CurrentConditions 
           temperature={temperature}
 					weatherConditions={weatherConditions} // TODO icon in component is hardcoded to cloudy
         />
 
+				<SectionDivider />
+
         <Hourly />
+
+				<SectionDivider />
+
+        <Alerts />
+
+				<SectionDivider />
+
+        <Update 
+					errorMessage={errorMessage}
+				/>
       </div>
     );
   }

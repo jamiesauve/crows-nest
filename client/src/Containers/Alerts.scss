@@ -1,0 +1,10 @@
+@import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/section';
+
+
+
+.alerts {
+	@include section-width;
+	@include flex-column;
+}
