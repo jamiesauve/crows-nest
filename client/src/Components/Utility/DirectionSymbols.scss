@@ -1,0 +1,17 @@
+@import '../../mixins/theme';
+
+.direction-symbol__rising {
+	color: $rising-color;
+}
+
+.direction-symbol__steady {
+	color: $steady-color;
+}
+
+.direction-symbol__falling {
+	color: $falling-color;
+}
+
+.direction-symbol__default {
+	color: $text-color;
+}

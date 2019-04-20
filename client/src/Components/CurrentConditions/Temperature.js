@@ -1,14 +1,17 @@
 import React from 'react';
-import { WiFahrenheit } from 'weather-icons-react';
+
+import getWeatherIconComponent from '../../Utils/getWeatherIconComponent';
+import getDirectionSymbol from '../../Utils/getDirectionSymbol';
 
 import './Temperature.scss';
 
 const Temperature = (props) => {
+	const Component = getWeatherIconComponent(props.weatherConditions);
+	const DirectionSymbol = getDirectionSymbol(props.direction);
+
 	return (
 		<div className = "temperature">
-			<div className = "temperature__direction-symbol__rising">
-				&#9650;
-			</div>
+			<DirectionSymbol />
 			
 			<div className = "temperature__digit">
 				{
@@ -19,7 +22,7 @@ const Temperature = (props) => {
 			</div>
 			
 			<div className = "temperature__unit">
-				<WiFahrenheit 
+				<Component 
 					size={36}
 					color="#fff"
 				/>

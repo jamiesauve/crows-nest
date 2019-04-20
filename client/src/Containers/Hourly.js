@@ -4,11 +4,13 @@ import HourlyCondition from '../Components/Hourly/HourlyCondition';
 
 import './Hourly.scss';
 
-const Hourly = (props) => {
+const Hourly = (props) => { 
 
 	return (
 		<div className = "hourly-condition">
-			<HourlyCondition />
+			<HourlyCondition 
+				direction = {props.direction}
+			/>
 		</div>
 	)
 };

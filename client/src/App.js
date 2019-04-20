@@ -23,15 +23,16 @@ class App extends Component {
 				// nearestStormDirection: undefined,
 				// nearestStormDistance: undefined,
 			},
+			data: {},
 			errorMessage: '',
-			updateInterval: 180000, // 3 minutes
+			hourlyConditions: {},
 			isLoading: true, // TODO use React.lazy instead of this
 			location: {
 				//St Charles, MO
 				lng: -90.497,
 				lat: 38.788,
 			},
-			data: {},
+			updateInterval: 180000, // 3 minutes
 		}
 
 		this.fetchWeather = this.fetchWeather.bind(this);
@@ -75,10 +76,12 @@ class App extends Component {
 				// pull bits I need off of the payload
 				const currentConditions = _pick(payload.data.data.currently, [
 					'temperature',
-					'icon'
+					'icon',
 					// 'nearestStormDirection',
 					// 'nearestStormDistance',
 				])
+
+				const hourlyConditions = payload.data.data.hourly.data;
 	
 				this.setState({
 					currentConditions: {
@@ -86,7 +89,8 @@ class App extends Component {
 						weatherConditions: currentConditions.icon,
 						// TODO add temperatureChange (rising/falling/steady) - will require time machine
 						// TODO add pressureChange (rising/falling/steady)
-					}
+					},
+					hourlyConditions,
 				});
 			}
 
@@ -96,6 +100,7 @@ class App extends Component {
 	render() {
 		const {
 			errorMessage,
+			hourlyConditions,
 		} = this.state;
 
 		const {
@@ -122,7 +127,9 @@ class App extends Component {
 
 				<SectionDivider />
 
-        <Hourly />
+        <Hourly 
+					hourlyConditions={hourlyConditions}
+				/>
 
 				<SectionDivider />
 

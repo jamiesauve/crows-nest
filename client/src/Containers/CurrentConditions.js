@@ -16,10 +16,12 @@ const CurrentConditions = (props) => {
 		<div className = "current-conditions">
 				<Temperature 
 					temperature={temperature}
+					direction={"rising"}
 				/>
 				
 				<WeatherConditions
 					weatherConditions={weatherConditions}
+					direction={"falling"}
 				/>
 
 				{/* <NearestStorm 

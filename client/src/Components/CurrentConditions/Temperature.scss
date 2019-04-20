@@ -11,16 +11,4 @@
 	.temperature__unit {
 		align-self: flex-start;
 	}
-
-	.temperature__direction-symbol__rising {
-		color: $rising-color;
-	}
-	
-	.temperature__direction-symbol__steady {
-		color: $steady-color;
-	}
-	
-	.temperature__direction-symbol__falling {
-		color: $falling-color;
-	}
 }	
