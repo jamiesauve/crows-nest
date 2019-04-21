@@ -17,11 +17,13 @@ const CurrentConditions = (props) => {
 				<Temperature 
 					temperature={temperature}
 					direction={"rising"}
+					isLargeSize
 				/>
 				
 				<WeatherConditions
 					weatherConditions={weatherConditions}
 					direction={"falling"}
+					isLargeSize
 				/>
 
 				{/* <NearestStorm 

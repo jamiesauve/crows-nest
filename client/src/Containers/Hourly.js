@@ -7,10 +7,18 @@ import './Hourly.scss';
 const Hourly = (props) => { 
 
 	return (
-		<div className = "hourly-condition">
-			<HourlyCondition 
-				direction = {props.direction}
-			/>
+		<div className = "hourly">
+			{
+				props.hourlyConditionsList.map((hourlyCondition) => {
+				return (
+					<HourlyCondition
+					temperature={hourlyCondition.temperature}
+					temperatureDirection={props.temperatureDirection}
+					time={hourlyCondition.time}
+					weatherConditions={hourlyCondition.weatherConditions}
+					/>
+				)
+			}) }
 		</div>
 	)
 };

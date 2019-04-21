@@ -5,6 +5,10 @@
 	@include flex-row;
 
 	.temperature__digit {
+		font-size: $font-size-m;
+	}
+
+	.temperature__digit--large {
 		font-size: $font-size-xxl;
 	}
 	

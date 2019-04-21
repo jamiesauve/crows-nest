@@ -1,44 +1,32 @@
 import React from 'react';
 
-import { WiFahrenheit } from 'weather-icons-react';
-import getWeatherIconComponent from '../../Utils/getWeatherIconComponent';
-import getDirectionSymbol from '../../Utils/getDirectionSymbol';
+import Temperature from '../CurrentConditions/Temperature';
+import WeatherConditions from '../CurrentConditions/WeatherConditions';
+
+import './HourlyCondition.scss';
 
 const HourlyCondition = (props) => {
-	const Component = getWeatherIconComponent(props.weatherConditions);
-	const DirectionSymbol = getDirectionSymbol(props.directionSymbol);
+	const {
+		temperature,
+		time,
+		weatherConditions,
+	} = props;
 
 	return (
 		<div className = "hourly-condition">
-			<Component 
-				size={48}
-				color="#fff"
-				/>
+			<Temperature 
+					temperature={temperature}
+					direction={"rising"}
+			/>
+			
+			<WeatherConditions
+				weatherConditions={weatherConditions}
+				direction={"falling"}
+				unitSize={36}
+			/>
 
-			<DirectionSymbol />
-
-			{/* 
-			// in a tooltip
-			<div className = "hourly-condition__label">
-				{props.weatherConditions}
-			</div>	 */}
-
-			{/* &#9650; */}
-			{/* &#9679; */}
-
-			<div className = "hourly-condition__digit">
-				{
-					props.temperature
-					? Math.round(props.temperature)
-					: '--'
-				}
-			</div>
-
-			<div className = "hourly-condition__unit">
-				<WiFahrenheit 
-					size={36}
-					color="#fff"
-				/>
+			<div className = "hourly-condition__time">
+				{time}
 			</div>
 		</div>
 	)

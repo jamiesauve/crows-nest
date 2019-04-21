@@ -21,46 +21,88 @@ const getWeatherIconComponent = (label) => {
 
 	switch(label) {
 		case "clear-day": {
-			return WiDaySunny;
+			return {
+				icon: WiDaySunny,
+				color: '#fa0',
+			};
 		}
 		case "clear-night": {
-			return WiNightClear;
+			return {
+				icon: WiNightClear,
+				color: '#fff',
+			};
 		}
 		case "cloudy": {
-			return WiCloud;
+			return {
+				icon: WiCloud,
+				color: '#fff',
+			};
 		}
 		case "fog": {
-			return WiFog;
+			return {
+				icon: WiFog,
+				color: '#fff',
+			};
 		}
 		case "hail": {
-			return WiHail;
+			return {
+				icon: WiHail,
+				color: '#fff',
+			};
 		}
 		case "partly-cloudy-day": {
-			return WiDayCloudy;
+			return {
+				icon: WiDayCloudy,
+				color: '#fff',
+			};
 		}
 		case "partly-cloudy-night": {
-			return WiNightAltCloudy;
+			return {
+				icon: WiNightAltCloudy,
+				color: '#fff',
+			};
 		}	
 		case "rain": {
-			return WiRain;
+			return {
+				icon: WiRain,
+				color: '#ccf',
+			};
 		}
 		case "sleet": {
-			return WiSleet;
+			return {
+				icon: WiSleet,
+				color: '#ccd',
+			};
 		}
 		case "snow": {
-			return WiSnow;
+			return {
+				icon: WiSnow,
+				color: '#fff',
+			};
 		}
 		case "tornado": {
-			return WiTornado;
+			return {
+				icon: WiTornado,
+				color: '#aaa',
+			};
 		}
 		case "thunderstorm": {
-			return WiThunderstorm;
+			return {
+				icon: WiThunderstorm,
+				color: '#ccd',
+			};
 		}
 		case "wind": {
-			return WiStrongWind;
+			return {
+				icon: WiStrongWind,
+				color: '#ddd',
+			};
 		}
 		default:
-			return WiRefresh;
+		return {
+			icon: WiRefresh,
+			color: '#fff',
+		};
 	}
 };
 

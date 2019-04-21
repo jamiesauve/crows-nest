@@ -4,16 +4,18 @@ import getWeatherIconComponent from '../../Utils/getWeatherIconComponent';
 import getDirectionSymbol from '../../Utils/getDirectionSymbol';
 
 import './Temperature.scss';
+import { WiFahrenheit } from 'weather-icons-react';
 
 const Temperature = (props) => {
-	const Component = getWeatherIconComponent(props.weatherConditions);
 	const DirectionSymbol = getDirectionSymbol(props.direction);
 
 	return (
 		<div className = "temperature">
-			<DirectionSymbol />
+			<DirectionSymbol 
+				isLargeSize={props.isLargeSize}
+			/>
 			
-			<div className = "temperature__digit">
+			<div className = {props.isLargeSize ? "temperature__digit--large" : "temperature__digit"}>
 				{
 					props.temperature
 					? Math.round(props.temperature)
@@ -22,8 +24,8 @@ const Temperature = (props) => {
 			</div>
 			
 			<div className = "temperature__unit">
-				<Component 
-					size={36}
+				<WiFahrenheit 
+					size={props.isLargeSize ? 36 : 24}
 					color="#fff"
 				/>
 			</div>

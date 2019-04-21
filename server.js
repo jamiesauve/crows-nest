@@ -34,15 +34,14 @@ app.get('/api/getWeather', (req, res) => {
 	// hit up darksky
 	axios.get(
 		`https://api.darksky.net/forecast/${process.env.REACT_APP_DARK_SKY_API_KEY}/` +
-		`${lat},${lng}?exclude=minutely,daily`,
+		`${lat},${lng}?exclude=minutely,daily&time=${Date.now()}`,
 	).then((payload) => {
-
 		res.send({
 			data: payload.data,
 			error: false,
 		});
 	}).catch((e) => {
-		console.log('there was an error in the DarkSky call :(');
+		console.warn('there was an error in the DarkSky call :(');
 		res.send({
 			data: null,
 			error: true

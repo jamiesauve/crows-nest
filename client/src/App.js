@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {pick as _pick, } from 'lodash';
 import axios from 'axios';
-
+import moment from 'moment';
 
 import './App.scss';
 import Orientation from './Containers/Orientation';
@@ -25,7 +25,7 @@ class App extends Component {
 			},
 			data: {},
 			errorMessage: '',
-			hourlyConditions: {},
+			hourlyConditionsList: [],
 			isLoading: true, // TODO use React.lazy instead of this
 			location: {
 				//St Charles, MO
@@ -81,8 +81,12 @@ class App extends Component {
 					// 'nearestStormDistance',
 				])
 
-				const hourlyConditions = payload.data.data.hourly.data;
-	
+				const hourlyConditionsList = payload.data.data.hourly.data.map((hour) => ({
+						temperature: hour.temperature,
+						weatherConditions: hour.icon,
+						time: moment(hour.time * 1000).format("h A"), //DarkSky's value is in seconds, not milliseconds
+					}));
+
 				this.setState({
 					currentConditions: {
 						temperature: currentConditions.temperature,
@@ -90,7 +94,7 @@ class App extends Component {
 						// TODO add temperatureChange (rising/falling/steady) - will require time machine
 						// TODO add pressureChange (rising/falling/steady)
 					},
-					hourlyConditions,
+					hourlyConditionsList,
 				});
 			}
 
@@ -99,16 +103,10 @@ class App extends Component {
 
 	render() {
 		const {
+			currentConditions,
 			errorMessage,
-			hourlyConditions,
+			hourlyConditionsList,
 		} = this.state;
-
-		const {
-			temperature,
-      weatherConditions,
-			// nearestStormDirection,
-			// nearestStormDistance,
-		} = this.state.currentConditions;
 
     return (
       <div className="App">
@@ -121,14 +119,15 @@ class App extends Component {
 				<SectionDivider />
 
         <CurrentConditions 
-          temperature={temperature}
-					weatherConditions={weatherConditions} // TODO icon in component is hardcoded to cloudy
+          temperature={currentConditions.temperature}
+					weatherConditions={currentConditions.weatherConditions} // TODO icon in component is hardcoded to cloudy
         />
 
 				<SectionDivider />
 
         <Hourly 
-					hourlyConditions={hourlyConditions}
+					hourlyConditionsList={hourlyConditionsList}
+					temperatureDirection={"falling"}
 				/>
 
 				<SectionDivider />

@@ -2,16 +2,30 @@
 
 .direction-symbol__rising {
 	color: $rising-color;
+	font-size: $font-size-xs;
+}
+
+.direction-symbol__rising--large {
+	color: $rising-color;
+	font-size: $font-size-s;
 }
 
 .direction-symbol__steady {
 	color: $steady-color;
+	font-size: $font-size-xs;
+}
+
+.direction-symbol__steady--large {
+	color: $steady-color;
+	font-size: $font-size-s;
 }
 
 .direction-symbol__falling {
 	color: $falling-color;
+	font-size: $font-size-xs;
 }
 
-.direction-symbol__default {
-	color: $text-color;
+.direction-symbol__falling--large {
+	color: $falling-color;
+	font-size: $font-size-s;
 }

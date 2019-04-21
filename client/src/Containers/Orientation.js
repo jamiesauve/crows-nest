@@ -1,17 +1,12 @@
 import React from 'react';
-// import moment from 'moment';
+import moment from 'moment';
+
 import './Orientation.scss';
 
 const Orientation = (props) => {
-	const formatDate = (date) => {
-		// TODO add formatting logic
-		return date;
-	};
-
-	const formatTime = (time) => {
-		// TODO add formatting logic
-		return time;
-	};
+const now = moment();
+const date = now.format('MMMM D');
+const time = now.format('h:mm a');
 
 	return (
 		<div className = "orientation">
@@ -21,11 +16,11 @@ const Orientation = (props) => {
 			
 			<div className = "orientation__section1">
 				<div className = "orientation__section1__date">
-					{formatDate(props.date)}
+					{date /* TODO Make these update in real time! */} 
 				</div>
 
 				<div className = "orientation__section1__time">
-					{formatTime(props.time)}
+					{time}
 				</div>
 			</div>
 		</div>
