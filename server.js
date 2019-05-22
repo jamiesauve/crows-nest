@@ -41,7 +41,7 @@ app.get('/api/getWeather', (req, res) => {
 			error: false,
 		});
 	}).catch((e) => {
-		console.warn('there was an error in the DarkSky call :(');
+		console.log('there was an error in the DarkSky call :( - most likely you are offline. ');
 		res.send({
 			data: null,
 			error: true

@@ -1,10 +1,8 @@
 @import '../../mixins/theme';
+@import '../../mixins/display';
 
 .hourly-condition {
-	background: #444;
-	border-radius: 0.5rem;
-	border: 2px solid $background-color; 
-	width: 16.7%;
+	@include side-scroll_item;
 
 	.hourly-condition__time {
 		font-size: $font-size-s;

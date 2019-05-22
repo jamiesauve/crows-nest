@@ -1,5 +1,6 @@
 import {
 	WiDaySunny,
+	WiFlood,
 	WiNightClear, 
 	WiCloud, 
 	WiFog,
@@ -10,9 +11,10 @@ import {
 	WiRefresh,
 	WiSleet,
 	WiSnow,
+	WiStrongWind,
 	WiTornado,
 	WiThunderstorm,
-	WiStrongWind
+	WiVolcano,
 
 } from 'weather-icons-react';
 
@@ -36,6 +38,12 @@ const getWeatherIconComponent = (label) => {
 			return {
 				icon: WiCloud,
 				color: '#fff',
+			};
+		}
+		case "flood": {
+			return {
+				icon: WiFlood,
+				color: '#66f',
 			};
 		}
 		case "fog": {
@@ -89,7 +97,7 @@ const getWeatherIconComponent = (label) => {
 		case "thunderstorm": {
 			return {
 				icon: WiThunderstorm,
-				color: '#ccd',
+				color: '#aac',
 			};
 		}
 		case "wind": {
@@ -100,7 +108,7 @@ const getWeatherIconComponent = (label) => {
 		}
 		default:
 		return {
-			icon: WiRefresh,
+			icon: WiVolcano,
 			color: '#fff',
 		};
 	}

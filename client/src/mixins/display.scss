@@ -1,0 +1,19 @@
+@import '../mixins/flex';
+@import '../mixins/section';
+
+@mixin side-scroll {
+	@include section-width;
+	@include flex-row;
+
+	justify-content: unset;
+
+	width: 100%;
+	overflow: scroll;
+};
+
+@mixin side-scroll_item {
+	background: #444;
+	border-radius: 0.5rem;
+	border: 2px solid $background-color; 
+	width: 16.7%;
+}

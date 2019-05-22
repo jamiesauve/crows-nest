@@ -9,13 +9,14 @@ const Hourly = (props) => {
 	return (
 		<div className = "hourly">
 			{
-				props.hourlyConditionsList.map((hourlyCondition) => {
+				props.hourlyConditionsList.map((hourlyCondition, index) => {
 				return (
 					<HourlyCondition
-					temperature={hourlyCondition.temperature}
-					temperatureDirection={props.temperatureDirection}
-					time={hourlyCondition.time}
-					weatherConditions={hourlyCondition.weatherConditions}
+						key = {`hourly${index}`}
+						temperature={hourlyCondition.temperature}
+						temperatureDirection={props.temperatureDirection}
+						time={hourlyCondition.time}
+						weatherConditions={hourlyCondition.weatherConditions}
 					/>
 				)
 			}) }

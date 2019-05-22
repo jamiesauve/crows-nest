@@ -1,6 +1,5 @@
 import React from 'react';
 
-import getWeatherIconComponent from '../../Utils/getWeatherIconComponent';
 import getDirectionSymbol from '../../Utils/getDirectionSymbol';
 
 import './Temperature.scss';
@@ -11,10 +10,6 @@ const Temperature = (props) => {
 
 	return (
 		<div className = "temperature">
-			<DirectionSymbol 
-				isLargeSize={props.isLargeSize}
-			/>
-			
 			<div className = {props.isLargeSize ? "temperature__digit--large" : "temperature__digit"}>
 				{
 					props.temperature
@@ -29,6 +24,10 @@ const Temperature = (props) => {
 					color="#fff"
 				/>
 			</div>
+
+			<DirectionSymbol 
+				isLargeSize={props.isLargeSize}
+			/>			
 
 			{/* &#9660; */}
 			{/* &#9679; */}

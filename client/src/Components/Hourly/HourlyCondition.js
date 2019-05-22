@@ -22,7 +22,6 @@ const HourlyCondition = (props) => {
 			<WeatherConditions
 				weatherConditions={weatherConditions}
 				direction={"falling"}
-				unitSize={36}
 			/>
 
 			<div className = "hourly-condition__time">

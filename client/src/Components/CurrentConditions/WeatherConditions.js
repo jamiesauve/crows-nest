@@ -10,7 +10,7 @@ const WeatherConditions = (props) => {
 	const WeatherIconComponent = weatherIcon.icon;
 	const weatherIconColor = weatherIcon.color;
 
-	const DirectionSymbol = getDirectionSymbol(props.direction);
+	const DirectionSymbol = props.direction ? getDirectionSymbol(props.direction) : null;
 
 	return (
 		<div className = "weather-conditions">
@@ -19,9 +19,11 @@ const WeatherConditions = (props) => {
 				color={weatherIconColor}
 			/>
 
-			<DirectionSymbol 
+			{DirectionSymbol
+			&& <DirectionSymbol 
 				isLargeSize={props.isLargeSize}
-			/>
+				/>
+			}
 
 			{/* 
 			// TODO in a tooltip

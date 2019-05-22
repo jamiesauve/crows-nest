@@ -1,13 +1,6 @@
 @import '../mixins/theme';
-@import '../mixins/flex';
-@import '../mixins/section';
+@import '../mixins/display';
 
 .hourly {
-	@include section-width;
-	@include flex-row;
-
-	justify-content: unset;
-
-	width: 100%;
-	overflow: scroll;
+	@include side-scroll;
 }

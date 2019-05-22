@@ -1,10 +1,8 @@
 @import '../mixins/theme';
-@import '../mixins/flex';
-@import '../mixins/section';
+@import '../mixins/display';
 
 
 
 .alerts {
-	@include section-width;
-	@include flex-column;
+	@include side-scroll;
 }

@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect, } from 'react';
 import moment from 'moment';
 
 import './Orientation.scss';
 
 const Orientation = (props) => {
-const now = moment();
-const date = now.format('MMMM D');
-const time = now.format('h:mm a');
+	const [currentDate, setCurrentDate, ] = useState(moment().format('MMMM D'));
+	const [currentTime, setCurrentTime, ] = useState(moment().format('h:mm a'));
+
+	// between this and useEffect, time will get updated every second but not necessarily on the second.
+	const updateDateAndTime = () => {
+		const now = moment();
+		setCurrentDate(now.format('MMMM D'));
+		setCurrentTime(now.format('h:mm a'));
+	};
+
+	let doThisEverySecond = 0;
+
+	useEffect(() => {
+		if (doThisEverySecond) {
+			clearInterval(doThisEverySecond);
+		}
+
+		doThisEverySecond = setInterval(updateDateAndTime, 1000);
+
+		return () => {
+			clearInterval(doThisEverySecond);
+		}
+	});
 
 	return (
 		<div className = "orientation">
@@ -16,11 +36,11 @@ const time = now.format('h:mm a');
 			
 			<div className = "orientation__section1">
 				<div className = "orientation__section1__date">
-					{date /* TODO Make these update in real time! */} 
+					{currentDate} 
 				</div>
 
 				<div className = "orientation__section1__time">
-					{time}
+					{currentTime}
 				</div>
 			</div>
 		</div>

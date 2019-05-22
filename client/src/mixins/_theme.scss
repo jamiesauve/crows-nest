@@ -7,10 +7,15 @@ $breakpoint-l: 1200px;
 $text-color: #fff;
 $background-color: #222;
 
-$warning-color: #e00;
 $rising-color: #f50;
 $steady-color: #ff0;
 $falling-color: #44f;
+
+// alert colors
+$low-danger: yellow;
+$medium-danger: orange;
+$high-danger: red;
+
 
 // font size
 $font-size-xxl: 40px;
