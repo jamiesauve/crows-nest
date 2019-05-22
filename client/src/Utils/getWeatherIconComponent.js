@@ -42,7 +42,7 @@ const getWeatherIconComponent = (label) => {
 		case "flood": {
 			return {
 				icon: WiFlood,
-				color: '#66f',
+				color: '#4a85c9', // 66f
 			};
 		}
 		case "fog": {
