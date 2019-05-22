@@ -20,7 +20,7 @@ const Temperature = (props) => {
 			
 			<div className = "temperature__unit">
 				<WiFahrenheit 
-					size={props.isLargeSize ? 36 : 24}
+					size={props.isLargeSize ? 60 : 24}
 					color="#fff"
 				/>
 			</div>

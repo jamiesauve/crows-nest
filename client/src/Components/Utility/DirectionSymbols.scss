@@ -2,30 +2,30 @@
 
 .direction-symbol__rising {
 	color: $rising-color;
-	font-size: $font-size-xs;
+	font-size: $font-size-s;
 }
 
 .direction-symbol__rising--large {
 	color: $rising-color;
-	font-size: $font-size-s;
+	font-size: $font-size-m;
 }
 
 .direction-symbol__steady {
 	color: $steady-color;
-	font-size: $font-size-xs;
+	font-size: $font-size-s;
 }
 
 .direction-symbol__steady--large {
 	color: $steady-color;
-	font-size: $font-size-s;
+	font-size: $font-size-m;
 }
 
 .direction-symbol__falling {
 	color: $falling-color;
-	font-size: $font-size-xs;
+	font-size: $font-size-s;
 }
 
 .direction-symbol__falling--large {
 	color: $falling-color;
-	font-size: $font-size-s;
+	font-size: $font-size-m;
 }

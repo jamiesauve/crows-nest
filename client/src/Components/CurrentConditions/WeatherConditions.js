@@ -15,7 +15,7 @@ const WeatherConditions = (props) => {
 	return (
 		<div className = "weather-conditions">
 			<WeatherIconComponent 
-				size={props.isLargeSize ? "36" : "24"}
+				size={props.isLargeSize ? "72" : "48"}
 				color={weatherIconColor}
 			/>
 

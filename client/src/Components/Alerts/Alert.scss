@@ -5,7 +5,7 @@
 	border-radius: 0.5rem;
 	border: 2px solid $background-color; 
 	width: 25%;
-	padding: 5px;
+	padding: 4px;
 	margin: 2px;
 	
 	.alert__time {
@@ -18,15 +18,12 @@
 // colored borders
 .alert__low-danger {
 	border: 2px solid $low-danger;
-	color: $low-danger;
 }
 
 .alert__medium-danger {
 	border: 2px solid $medium-danger;
-	color: $medium-danger;
 }
 
 .alert__high-danger {
 	border: 2px solid $high-danger;
-	color: $high-danger;
 }
