@@ -33,12 +33,12 @@ const Update = (props) => {
 				<div className = "update__last-update">
 					{lastUpdateString}
 				</div>
-				<button className = "update__button">
+				<button 
+					className = "update__button"
+					onClick = {props.fetchWeather}
+				>
 					Update
 				</button>
-				<div className = "update__next-update">
-					Next update in 15 seconds.
-				</div>
 			</div>
 
 			{ props.errorMessage

@@ -8,7 +8,6 @@ import {
 	WiDayCloudy,
 	WiNightAltCloudy,
 	WiRain,
-	WiRefresh,
 	WiSleet,
 	WiSnow,
 	WiStrongWind,

@@ -5,15 +5,25 @@
 
 .update {
 	@include section-width;
-	@include flex-row;
+	@include flex-column;
 
 	font-size: $font-size-s;
 
-	.update__button {
-		@include soft-border;
+	.update__last-update {
+		margin: 10px;
+	}
 
-		color: $text-color;
+	.update__button {
+		background: $text-color;
+		border-radius: 2px;
+		box-shadow: 0 0 5px $text-color;
+		color: $background-color;
 		font-size: $font-size-m;
+
+		&:hover {
+			background: #f5f5f5;
+			box-shadow: 0 0 5px #555;
+		}
 	}
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {pick as _pick, } from 'lodash';
 import axios from 'axios';
 import moment from 'moment';
+import Spinner from 'react-loader-spinner';
 
 import './App.scss';
 import Orientation from './Containers/Orientation';
@@ -40,6 +41,7 @@ class App extends Component {
 			data: {},
 			errorMessage: '',
 			hourlyConditionsList: [],
+			isFetching: false,
 			isLoading: true, // TODO use React.lazy instead of this
 			lastUpdatedAt: {
 				timeStamp: 0,
@@ -73,6 +75,10 @@ class App extends Component {
 			lat,
 			lng,
 		} = this.state.location;
+
+		this.setState({
+			isFetching: true,
+		});
 
 		axios({
 			method: 'get',
@@ -124,6 +130,7 @@ class App extends Component {
 					// TODO add pressureChange (rising/falling/steady)
 				},
 				isLoading: false,
+				isFetching: false,
 				hourlyConditionsList,
 				lastUpdatedAt: {
 					timeStamp: data.currently.time,
@@ -145,6 +152,21 @@ class App extends Component {
 
     return (
       <div className="App">
+				{
+					this.state.isFetching &&
+					<div className = "app__foreground">
+						<Spinner
+
+							type="TailSpin"
+							color="#ddd"
+							height="50"
+							width="50"
+						/>
+
+						<div className = "app__fetching-screen" />
+					</div>
+				}
+
 				{
 					!isLoading &&
 					<>
@@ -192,6 +214,7 @@ class App extends Component {
 							<Update 
 								errorMessage={errorMessage}
 								lastUpdatedAt={lastUpdatedAt}
+								fetchWeather={this.fetchWeather}
 								/>
 						</ErrorBoundary>
 					</>
