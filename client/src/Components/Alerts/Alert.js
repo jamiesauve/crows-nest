@@ -7,7 +7,7 @@ import './Alert.scss';
 const Alert = (props) => {
 	const {
 		dangerLevel,
-		openAlertModal,
+		onClick,
 		time,
 		weatherConditions,
 	} = props;
@@ -17,7 +17,7 @@ const Alert = (props) => {
 	return (
 		<div 
 			className = {`alert alert__${dangerLevel}-danger`}
-			onClick={openAlertModal}
+			onClick={onClick}
 		>
 			<WeatherConditions
 				isLargeSize

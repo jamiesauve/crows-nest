@@ -35,6 +35,7 @@ class App extends Component {
 				// 	uri: '',
 				// }
 			],
+			currentAlert: {},
 			currentConditions: {
 				temperature: undefined,
 				isTemperatureRising: false, // TODO calculate this
@@ -62,6 +63,7 @@ class App extends Component {
 		this.trackWeather = this.trackWeather.bind(this);
 		this.closeAlertModal = this.closeAlertModal.bind(this);
 		this.openAlertModal = this.openAlertModal.bind(this);
+		this.setCurrentAlert = this.setCurrentAlert.bind(this);
 	}
 
 	componentDidMount() {
@@ -148,7 +150,6 @@ class App extends Component {
 	};
 
 	openAlertModal() {
-		console.log('opening');
 		this.setState({
 			alertModalIsOpen: true,
 		});
@@ -160,10 +161,17 @@ class App extends Component {
 		});
 	}
 
+	setCurrentAlert(currentAlert) {
+		this.setState({
+			currentAlert,
+		});
+	}
+
 	render() {
 		const {
 			alertModalIsOpen,
 			alerts,
+			currentAlert,
 			currentConditions,
 			errorMessage,
 			hourlyConditionsList,
@@ -227,6 +235,7 @@ class App extends Component {
 								nearestStormDirection={currentConditions.nearestStormDirection}
 								nearestStormDistance={currentConditions.nearestStormDistance}
 								openAlertModal={this.openAlertModal}
+								setCurrentAlert={this.setCurrentAlert}
 							/>
 						</ErrorBoundary>
 
@@ -244,6 +253,7 @@ class App extends Component {
 							<AlertModal
 								isOpen={alertModalIsOpen}
 								closeModal={this.closeAlertModal}
+								currentAlert={currentAlert}
 							/>
 						</ErrorBoundary>
 					</>

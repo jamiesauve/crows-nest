@@ -8,7 +8,10 @@ const AlertModal = (props) => {
 	const {
 		isOpen,
 		closeModal,
+		currentAlert,
 	} = props;
+
+	const alertData = currentAlert;
 
 	return (
 		<Modal
@@ -17,7 +20,7 @@ const AlertModal = (props) => {
 			onRequestClose={closeModal}
 			isOpen={isOpen}
 		>
-			Hi!
+			{alertData.title}
 		</Modal>
 	);
 };

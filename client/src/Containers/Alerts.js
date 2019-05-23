@@ -60,9 +60,13 @@ class Alerts extends Component {
 				<Alert
 					dangerLevel={dangerLevel}
 					key={`alert${index}`}
-					openAlertModal={this.props.openAlertModal}
+					onClick = {() => {
+						this.props.setCurrentAlert(rawAlert);
+						this.props.openAlertModal();
+					}}
 					time={expiryTime}
 					weatherConditions={weatherCondition}
+					// an onclick that puts rawAlert into useState
 				/>
 			);
 		});
