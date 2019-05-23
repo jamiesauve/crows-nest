@@ -1,0 +1,22 @@
+@import '../mixins/theme';
+
+// react-modal element, parent to modals
+.ReactModal__Overlay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.alert-modal {
+	margin: 10px auto;
+	background: $background-color;
+	width: 90%;
+	max-height: 90%;
+	min-height: 50%;
+
+	padding: 2rem;
+
+	border-radius: 1rem;
+
+	text-align: center;
+}

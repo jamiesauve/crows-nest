@@ -10,6 +10,8 @@ import CurrentConditions from './Containers/CurrentConditions';
 import Hourly from './Containers/Hourly';
 import Alerts from './Containers/Alerts';
 import Update from './Containers/Update';
+import AlertModal from './Containers/AlertModal';
+
 import SectionDivider from './Components/Utility/SectionDivider';
 import ErrorBoundary from './Components/Utility/ErrorBoundary';
 
@@ -18,6 +20,7 @@ class App extends Component {
 		super();
 
 		this.state = {
+			alertModalIsOpen: false,
 			alerts: [
 				// sample object
 				// {
@@ -57,7 +60,11 @@ class App extends Component {
 
 		this.fetchWeather = this.fetchWeather.bind(this);
 		this.trackWeather = this.trackWeather.bind(this);
+		this.closeAlertModal = this.closeAlertModal.bind(this);
+		this.openAlertModal = this.openAlertModal.bind(this);
+	}
 
+	componentDidMount() {
 		this.trackWeather();
 	}
 
@@ -140,8 +147,22 @@ class App extends Component {
 		})
 	};
 
+	openAlertModal() {
+		console.log('opening');
+		this.setState({
+			alertModalIsOpen: true,
+		});
+	}
+
+	closeAlertModal() {
+		this.setState({
+			alertModalIsOpen: false,
+		});
+	}
+
 	render() {
 		const {
+			alertModalIsOpen,
 			alerts,
 			currentConditions,
 			errorMessage,
@@ -151,7 +172,7 @@ class App extends Component {
 		} = this.state;
 
     return (
-      <div className="App">
+      <div className="app">
 				{
 					this.state.isFetching &&
 					<div className = "app__foreground">
@@ -205,6 +226,7 @@ class App extends Component {
 								hourlyConditionsList={hourlyConditionsList}
 								nearestStormDirection={currentConditions.nearestStormDirection}
 								nearestStormDistance={currentConditions.nearestStormDistance}
+								openAlertModal={this.openAlertModal}
 							/>
 						</ErrorBoundary>
 
@@ -216,6 +238,13 @@ class App extends Component {
 								lastUpdatedAt={lastUpdatedAt}
 								fetchWeather={this.fetchWeather}
 								/>
+						</ErrorBoundary>
+
+						<ErrorBoundary>
+							<AlertModal
+								isOpen={alertModalIsOpen}
+								closeModal={this.closeAlertModal}
+							/>
 						</ErrorBoundary>
 					</>
 				}

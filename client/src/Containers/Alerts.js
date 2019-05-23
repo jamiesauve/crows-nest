@@ -60,6 +60,7 @@ class Alerts extends Component {
 				<Alert
 					dangerLevel={dangerLevel}
 					key={`alert${index}`}
+					openAlertModal={this.props.openAlertModal}
 					time={expiryTime}
 					weatherConditions={weatherCondition}
 				/>

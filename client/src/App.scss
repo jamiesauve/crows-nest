@@ -3,7 +3,7 @@
 @import './mixins/decoration';
 
 
-.App {
+.app {
   @include flex-column;
 
   background: $background-color;
@@ -20,7 +20,7 @@
 }
 
 @media screen and (min-width: $breakpoint-s) {
-  .App {
+  .app {
     width: 30vw;
   }
 }

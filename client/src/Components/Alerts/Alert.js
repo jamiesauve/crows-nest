@@ -7,6 +7,7 @@ import './Alert.scss';
 const Alert = (props) => {
 	const {
 		dangerLevel,
+		openAlertModal,
 		time,
 		weatherConditions,
 	} = props;
@@ -14,10 +15,13 @@ const Alert = (props) => {
 	// TODO build logic for danger level out
 
 	return (
-		<div className = {`alert alert__${dangerLevel}-danger`}>
+		<div 
+			className = {`alert alert__${dangerLevel}-danger`}
+			onClick={openAlertModal}
+		>
 			<WeatherConditions
-				weatherConditions={weatherConditions}
 				isLargeSize
+				weatherConditions={weatherConditions}
 			/>
 
 			<div className = "alert__time">
