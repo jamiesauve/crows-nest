@@ -1,4 +1,6 @@
 @import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/decoration';
 
 // react-modal element, parent to modals
 .ReactModal__Overlay {
@@ -8,6 +10,8 @@
 }
 
 .alert-modal {
+	@include flex-column;
+
 	margin: 10px auto;
 	background: $background-color;
 	width: 90%;
@@ -19,4 +23,50 @@
 	border-radius: 1rem;
 
 	text-align: center;
+
+	.alert-modal__title-container {
+		@include flex-row;
+		margin-bottom: 2rem;
+
+		.alert-modal__icon-frame{
+			flex-grow: 0;
+	
+			background: #444;
+			border-radius: 0.5rem;
+		}
+
+		.alert-modal__title-container__right-box {
+			@include flex-column;
+			align-items: flex-start;
+			text-align: left;
+			padding-left: 1rem;
+
+			.alert-modal__title-container__right-box__title{
+				font-size: $font-size-l;
+			}
+			
+			.alert-modal__title-container__right-box__expiry-time {
+				font-size: $font-size-m;
+			}
+		}
+	}
+
+	.alert-modal__description-container {
+		overflow: scroll;
+	}
+
+	.alert-modal__footer {
+		@include flex-row;
+
+		.alert-modal__footer__close-button {
+			@include button;
+			padding: 0 .3rem;
+
+			margin-top: 2rem;
+			
+			.alert-modal__footer__close-button {
+				@include button-hover;
+			}
+		}
+	}
 }

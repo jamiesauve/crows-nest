@@ -3,6 +3,8 @@ import Moment from 'moment';
 
 import Alert from '../Components/Alerts/Alert';
 
+import getDangerLevel from '../Utils/getDangerLevel';
+
 import './Alerts.scss';
 
 class Alerts extends Component {
@@ -21,16 +23,7 @@ class Alerts extends Component {
 	) {
 		// will need a way to parse out duplicate weather conditions (floods)
 		const alerts = rawAlerts.map((rawAlert, index) => {
-			const dangerLevel = (() => {
-				switch(rawAlert.severity) {
-					case "warning":
-						return "high";
-					case "watch":
-						return "medium"; 
-					default:
-						return "low";
-				}
-			})();
+			const dangerLevel = getDangerLevel(rawAlert.severity);
 
 			const expiryTime = Moment(rawAlert.expires * 1000).format("h:MM a");
 
@@ -56,6 +49,8 @@ class Alerts extends Component {
 				return rawAlert.title;
 			})();
 
+			rawAlert.weatherCondition = weatherCondition;
+
 			return (
 				<Alert
 					dangerLevel={dangerLevel}
@@ -66,7 +61,6 @@ class Alerts extends Component {
 					}}
 					time={expiryTime}
 					weatherConditions={weatherCondition}
-					// an onclick that puts rawAlert into useState
 				/>
 			);
 		});
