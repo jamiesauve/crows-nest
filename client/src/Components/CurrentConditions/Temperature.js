@@ -25,9 +25,11 @@ const Temperature = (props) => {
 				/>
 			</div>
 
-			<DirectionSymbol 
-				isLargeSize={props.isLargeSize}
-			/>			
+				{DirectionSymbol
+				&& <DirectionSymbol 
+					isLargeSize={props.isLargeSize}
+				/>
+				}
 
 			{/* &#9660; */}
 			{/* &#9679; */}

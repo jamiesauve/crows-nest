@@ -10,7 +10,8 @@ const WeatherConditions = (props) => {
 	const WeatherIconComponent = weatherIcon.icon;
 	const weatherIconColor = weatherIcon.color;
 
-	const DirectionSymbol = props.direction ? getDirectionSymbol(props.direction) : null;
+	// TODO check: should set to null without any data
+	const DirectionSymbol = props.direction ? getDirectionSymbol(props.direction) : null; 
 
 	return (
 		<div className = "weather-conditions">
@@ -22,6 +23,7 @@ const WeatherConditions = (props) => {
 			{DirectionSymbol
 			&& <DirectionSymbol 
 				isLargeSize={props.isLargeSize}
+				
 				/>
 			}
 

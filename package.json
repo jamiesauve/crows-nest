@@ -65,7 +65,7 @@
 	},
 	"scripts": {
 		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\"",
-		"server": "nodemon server.js",
+		"server": "node server.js",
 		"start": "node client/scripts/start.js",
 		"build": "node client/scripts/build.js",
 		"test": "node client/scripts/test.js"

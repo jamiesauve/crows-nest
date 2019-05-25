@@ -2,7 +2,6 @@ import {
 	RisingSymbol,
 	SteadySymbol,
 	FallingSymbol,
-	DefaultSymbol,
 } from '../Components/Utility/DirectionSymbols';
 
 
@@ -19,7 +18,7 @@ const getDirectionSymbol = (direction) => {
 			return FallingSymbol;
 		}
 		default:
-			return DefaultSymbol;
+			return null;
 	}
 };
 

@@ -15,7 +15,6 @@ const AlertModal = (props) => {
 	} = props;
 
 	const alertData = currentAlert;
-	console.log('alertData', alertData);
 
 	const dangerLevel = getDangerLevel(alertData.severity);
 	const weatherIcon = getWeatherIconComponent(alertData.weatherCondition);

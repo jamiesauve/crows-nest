@@ -14,7 +14,6 @@ const Hourly = (props) => {
 					<HourlyCondition
 						key = {`hourly${index}`}
 						temperature={hourlyCondition.temperature}
-						temperatureDirection={props.temperatureDirection}
 						time={hourlyCondition.time}
 						weatherConditions={hourlyCondition.weatherConditions}
 					/>

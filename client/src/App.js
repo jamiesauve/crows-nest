@@ -38,9 +38,15 @@ class App extends Component {
 			currentAlert: {},
 			currentConditions: {
 				temperature: undefined,
-				isTemperatureRising: false, // TODO calculate this
+				pressure: undefined,
+				temperatureDirection: undefined,
+				pressureDirection: undefined,
 				nearestStormDirection: undefined,
 				nearestStormDistance: undefined,
+			},
+			previousConditions: {
+				temperature: undefined,
+				pressure: undefined,
 			},
 			data: {},
 			errorMessage: '',
@@ -61,6 +67,8 @@ class App extends Component {
 
 		this.fetchWeather = this.fetchWeather.bind(this);
 		this.trackWeather = this.trackWeather.bind(this);
+		this.calculateCurrentTemperatureDirection = this.calculateCurrentTemperatureDirection.bind(this);
+		this.calculateCurrentPressureDirection = this.calculateCurrentPressureDirection.bind(this);
 		this.closeAlertModal = this.closeAlertModal.bind(this);
 		this.openAlertModal = this.openAlertModal.bind(this);
 		this.setCurrentAlert = this.setCurrentAlert.bind(this);
@@ -100,7 +108,9 @@ class App extends Component {
 				'Content-Type': 'application/json',
 			},
 		}).then((payload) => {
-			let data;
+			let mostRecentData;
+			let ageingData;
+			let previousData;
 
 			if(payload.data.error) {
 				this.setState({
@@ -108,46 +118,126 @@ class App extends Component {
 				});
 
 				//get data from localStorage instead
-				data = JSON.parse(localStorage.getItem('mostRecentData'));
+				mostRecentData = JSON.parse(localStorage.getItem('mostRecentData'));
+				ageingData = JSON.parse(localStorage.getItem('ageingData'));
+				previousData = JSON.parse(localStorage.getItem('previousData'));
+
 			} else {
-				data = payload.data.data;
-				localStorage.setItem('mostRecentData', JSON.stringify(data));
+				mostRecentData = payload.data.data;
+
+				previousData = JSON.parse(localStorage.getItem('previousData'));
+				ageingData = JSON.parse(localStorage.getItem('ageingData'));
+
+				// if previousData is more than an hour old, set it to null
+				if (previousData && (mostRecentData.currently.time - previousData.currently.time) > 3600) {
+					localStorage.removeItem('previousData');
+				};
+				console.log('time since ageingData', mostRecentData.currently.time - ageingData.currently.time);
+				console.log('time since previousData', mostRecentData.currently.time - previousData.currently.time);
+				// if ageingData is more than 3 minutes old, replace previous with ageing and ageing with current
+				if(!ageingData  || (mostRecentData.currently.time - ageingData.currently.time) > 180) {
+					localStorage.setItem('previousData', JSON.stringify(ageingData));
+					previousData = ageingData;
+					localStorage.setItem('ageingData', JSON.stringify(mostRecentData));
+				}
+
+				// set mostRecentData to most recent update, regardless of everything else
+				localStorage.setItem('mostRecentData', JSON.stringify(mostRecentData));
 			}
-			
+
 			// pull bits I need off of the payload
-			const currentConditions = _pick(data.currently, [
+			const currentConditions = _pick(mostRecentData.currently, [
 				'temperature',
+				'pressure',
 				'icon',
 				'nearestStormDirection',
 				'nearestStormDistance',
-			])
+			]);
 
-			const hourlyConditionsList = data.hourly.data.map((hourlyCondition) => ({
+			const previousConditions = previousData 
+			? _pick(previousData.currently, [
+				'temperature',
+				'pressure',
+			])
+			: {
+				'temperature': undefined,
+				'pressure': undefined,
+			};
+
+			const hourlyConditionsList = mostRecentData.hourly.data.map((hourlyCondition) => ({
 					temperature: hourlyCondition.temperature,
 					weatherConditions: hourlyCondition.icon,
 					time: moment(hourlyCondition.time * 1000).format("h A"), // DarkSky's value is in seconds, not milliseconds
 				}));
 
-			const alerts = data.alerts;
+			const alerts = mostRecentData.alerts;
 
-			this.setState({
+			this.setState((prevState) => ({
 				alerts,
 				currentConditions: {
+					...prevState.currentConditions,
 					temperature: currentConditions.temperature,
+					pressure: currentConditions.pressure,
 					weatherConditions: currentConditions.icon,
 					// TODO add temperatureChange (rising/falling/steady)
 					// TODO add pressureChange (rising/falling/steady)
+				},
+				previousConditions: {
+					temperature: previousConditions.temperature,
+					pressure: previousConditions.pressure,
 				},
 				isLoading: false,
 				isFetching: false,
 				hourlyConditionsList,
 				lastUpdatedAt: {
-					timeStamp: data.currently.time,
-					formatted: moment(data.currently.time * 1000).format("h A"),
+					timeStamp: mostRecentData.currently.time,
+					formatted: moment(mostRecentData.currently.time * 1000).format("h A"),
 				}
-			});
-		})
+			}));
+
+
+			const previousTime = previousData
+			? previousData.currently.time
+			: null;
+			// measurements are taken with previous data that is between 3 minutes and 1 hour older than current data
+			const timeSincePreviousData = mostRecentData.currently.time - previousTime;
+
+			// TODO this is not working
+			if ((timeSincePreviousData < 3600)) {
+				const currentTemperatureDirection = this.calculateCurrentTemperatureDirection(previousConditions.temperature, currentConditions.temperature);
+				const currentPressureDirection = this.calculateCurrentPressureDirection(previousConditions.pressure, currentConditions.pressure);
+
+				this.setState((prevState) => ({
+					currentConditions: {
+						...prevState.currentConditions,
+						temperatureDirection: currentTemperatureDirection,
+						pressureDirection: currentPressureDirection,
+					}
+				}));
+			}
+
+
+			
+		});
 	};
+
+	calculateCurrentTemperatureDirection(previousTemperature, currentTemperature) {
+		const temperatureChange = currentTemperature - previousTemperature;
+		console.log('temp change', temperatureChange);
+		// within 0.1 degree is considered steady 
+		if (temperatureChange > 0.1) return "rising";
+		else if (temperatureChange < -0.1) return "rising";
+		else return "steady";
+	}
+
+	calculateCurrentPressureDirection(previousPressure, currentPressure) {
+		const pressureChange = currentPressure - previousPressure;
+		console.log('pressure change', pressureChange);
+		// within 0.01 mB is considered steady 
+		if (pressureChange > 0.01) return "rising";
+		else if (pressureChange < -0.01) return "rising";
+		else return "steady";
+	}
 
 	openAlertModal() {
 		this.setState({
@@ -211,8 +301,10 @@ class App extends Component {
 
 						<ErrorBoundary>
 							<CurrentConditions 
+								pressureDirection={currentConditions.pressureDirection}
 								temperature={currentConditions.temperature}
-								weatherConditions={currentConditions.weatherConditions} // TODO icon in component is hardcoded to cloudy
+								temperatureDirection={currentConditions.temperatureDirection}
+								weatherConditions={currentConditions.weatherConditions}
 								/>
 						</ErrorBoundary>
 
@@ -221,7 +313,6 @@ class App extends Component {
 						<ErrorBoundary>
 							<Hourly 
 								hourlyConditionsList={hourlyConditionsList}
-								temperatureDirection={"falling"}
 								/>
 						</ErrorBoundary>
 

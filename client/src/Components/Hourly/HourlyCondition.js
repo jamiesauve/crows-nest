@@ -15,13 +15,11 @@ const HourlyCondition = (props) => {
 	return (
 		<div className = "hourly-condition">
 			<Temperature 
-					temperature={temperature}
-					direction={"rising"}
+				temperature={temperature}
 			/>
 			
 			<WeatherConditions
 				weatherConditions={weatherConditions}
-				direction={"falling"}
 			/>
 
 			<div className = "hourly-condition__time">

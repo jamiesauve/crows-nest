@@ -8,7 +8,9 @@ import './CurrentConditions.scss';
 
 const CurrentConditions = (props) => {
 	const {
+		pressureDirection,
 		temperature,
+		temperatureDirection,
 		weatherConditions,
 	} = props;
 	
@@ -16,13 +18,13 @@ const CurrentConditions = (props) => {
 		<div className = "current-conditions">
 				<Temperature 
 					temperature={temperature}
-					direction={"rising"}
+					direction={temperatureDirection}
 					isLargeSize
 				/>
 				
 				<WeatherConditions
 					weatherConditions={weatherConditions}
-					direction={"falling"}
+					direction={pressureDirection}
 					isLargeSize
 				/>
 
