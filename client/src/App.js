@@ -14,6 +14,8 @@ import AlertModal from './Containers/AlertModal';
 
 import SectionDivider from './Components/Utility/SectionDivider';
 import ErrorBoundary from './Components/Utility/ErrorBoundary';
+import calculateCurrentTemperatureDirection from './Utils/calculateCurrentTemperatureDirection';
+import calculateCurrentPressureDirection from './Utils/calculateCurrentPressureDirection';
 
 class App extends Component {
   constructor() {
@@ -21,20 +23,7 @@ class App extends Component {
 
 		this.state = {
 			alertModalIsOpen: false,
-			alerts: [
-				// sample object
-				// {
-				// 	description: '',
-				// 	regions: [
-				// 		'',
-				// 	],
-				// 	severity: '',
-				// 	timeExpires: 0,
-				// 	timeIssued: 0,
-				// 	title: '',
-				// 	uri: '',
-				// }
-			],
+			alerts: [],
 			currentAlert: {},
 			currentConditions: {
 				temperature: undefined,
@@ -67,8 +56,6 @@ class App extends Component {
 
 		this.fetchWeather = this.fetchWeather.bind(this);
 		this.trackWeather = this.trackWeather.bind(this);
-		this.calculateCurrentTemperatureDirection = this.calculateCurrentTemperatureDirection.bind(this);
-		this.calculateCurrentPressureDirection = this.calculateCurrentPressureDirection.bind(this);
 		this.closeAlertModal = this.closeAlertModal.bind(this);
 		this.openAlertModal = this.openAlertModal.bind(this);
 		this.setCurrentAlert = this.setCurrentAlert.bind(this);
@@ -204,8 +191,8 @@ class App extends Component {
 
 			// TODO this is not working
 			if ((timeSincePreviousData < 3600)) {
-				const currentTemperatureDirection = this.calculateCurrentTemperatureDirection(previousConditions.temperature, currentConditions.temperature);
-				const currentPressureDirection = this.calculateCurrentPressureDirection(previousConditions.pressure, currentConditions.pressure);
+				const currentTemperatureDirection = calculateCurrentTemperatureDirection(previousConditions.temperature, currentConditions.temperature);
+				const currentPressureDirection = calculateCurrentPressureDirection(previousConditions.pressure, currentConditions.pressure);
 
 				this.setState((prevState) => ({
 					currentConditions: {
@@ -220,24 +207,6 @@ class App extends Component {
 			
 		});
 	};
-
-	calculateCurrentTemperatureDirection(previousTemperature, currentTemperature) {
-		const temperatureChange = currentTemperature - previousTemperature;
-		console.log('temp change', temperatureChange);
-		// within 0.1 degree is considered steady 
-		if (temperatureChange > 0.1) return "rising";
-		else if (temperatureChange < -0.1) return "rising";
-		else return "steady";
-	}
-
-	calculateCurrentPressureDirection(previousPressure, currentPressure) {
-		const pressureChange = currentPressure - previousPressure;
-		console.log('pressure change', pressureChange);
-		// within 0.01 mB is considered steady 
-		if (pressureChange > 0.01) return "rising";
-		else if (pressureChange < -0.01) return "rising";
-		else return "steady";
-	}
 
 	openAlertModal() {
 		this.setState({
