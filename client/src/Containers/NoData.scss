@@ -1,0 +1,21 @@
+@import '../mixins/theme';
+@import '../mixins/flex';
+@import '../mixins/decoration.scss';
+
+.no-data {
+	@include flex-column;
+	
+	.no-data__message {
+		margin: 2rem;
+	}
+	
+	.no-data__button {
+		@include button;
+		padding: 0 .3rem;
+		line-height: $font-size-l;
+
+		&:hover {
+			@include button-hover;
+		}
+	}
+};

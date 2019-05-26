@@ -11,6 +11,7 @@ import Hourly from './Containers/Hourly';
 import Alerts from './Containers/Alerts';
 import Update from './Containers/Update';
 import AlertModal from './Containers/AlertModal';
+import NoData from './Containers/NoData';
 
 import SectionDivider from './Components/Utility/SectionDivider';
 import ErrorBoundary from './Components/Utility/ErrorBoundary';
@@ -38,6 +39,7 @@ class App extends Component {
 				pressure: undefined,
 			},
 			data: {},
+			noDataAvailable: false,
 			errorMessage: '',
 			hourlyConditionsList: [],
 			isFetching: false,
@@ -103,6 +105,7 @@ class App extends Component {
 			if(payload.data.error) {
 				this.setState({
 					errorMessage: "Crow's Nest cannot update without an internet connection",
+					noDataAvailable: false,
 				});
 
 				//get data from localStorage instead
@@ -113,6 +116,7 @@ class App extends Component {
 			} else {
 				this.setState({
 					errorMessage: "",
+					noDataAvailable: false,
 				});
 
 				mostRecentData = payload.data.data;
@@ -130,8 +134,6 @@ class App extends Component {
 					localStorage.removeItem('ageingData');
 				};
 
-				console.log('time since ageingData', mostRecentData.currently.time - ageingData.currently.time);
-				console.log('time since previousData', previousData ? mostRecentData.currently.time - previousData.currently.time : null);
 				// if ageingData is more than 3 minutes old, replace previous with ageing and ageing with current
 				if(!ageingData  || (mostRecentData.currently.time - ageingData.currently.time) > 180) {
 					localStorage.setItem('previousData', JSON.stringify(ageingData));
@@ -144,10 +146,18 @@ class App extends Component {
 
 			};
 
-			this.updateStateWithFetchedData(
-				previousData,
-				mostRecentData,
-			)
+			if (mostRecentData) {
+				this.updateStateWithFetchedData(
+					previousData,
+					mostRecentData,
+				);
+			} else {
+				this.setState({
+					noDataAvailable: true,
+					isFetching: false,
+					isLoading: false,
+				})
+			}
 		});
 	};
 
@@ -275,68 +285,78 @@ class App extends Component {
 				}
 
 				{
-					!isLoading &&
-					<>
-						<ErrorBoundary>
-							<Orientation 
-								locationName="Saint Charles" // TODO hardcoded
-								date="April 12"
-								time="8:00 PM"
-								/>
-						</ErrorBoundary>
-						
-						<SectionDivider />
+					this.state.noDataAvailable
+					? <NoData
+						fetchWeather={this.fetchWeather}
+					/>
+					: <>
+						{
+							!isLoading &&
+							<>
+								<ErrorBoundary>
+									<Orientation 
+										locationName="Saint Charles" // TODO hardcoded
+										date="April 12"
+										time="8:00 PM"
+										/>
+								</ErrorBoundary>
+								
+								<SectionDivider />
 
-						<ErrorBoundary>
-							<CurrentConditions 
-								pressureDirection={currentConditions.pressureDirection}
-								temperature={currentConditions.temperature}
-								temperatureDirection={currentConditions.temperatureDirection}
-								weatherConditions={currentConditions.weatherConditions}
-								/>
-						</ErrorBoundary>
+								<ErrorBoundary>
+									<CurrentConditions 
+										pressureDirection={currentConditions.pressureDirection}
+										temperature={currentConditions.temperature}
+										temperatureDirection={currentConditions.temperatureDirection}
+										weatherConditions={currentConditions.weatherConditions}
+										/>
+								</ErrorBoundary>
 
-						<SectionDivider />
+								<SectionDivider />
 
-						<ErrorBoundary>
-							<Hourly 
-								hourlyConditionsList={hourlyConditionsList}
-								/>
-						</ErrorBoundary>
+								<ErrorBoundary>
+									<Hourly 
+										hourlyConditionsList={hourlyConditionsList}
+										/>
+								</ErrorBoundary>
 
-						<SectionDivider />
+								<SectionDivider />
 
-						<ErrorBoundary>
-							<Alerts 
-								alerts={alerts}
-								currentConditions={currentConditions}
-								hourlyConditionsList={hourlyConditionsList}
-								nearestStormDirection={currentConditions.nearestStormDirection}
-								nearestStormDistance={currentConditions.nearestStormDistance}
-								openAlertModal={this.openAlertModal}
-								setCurrentAlert={this.setCurrentAlert}
-							/>
-						</ErrorBoundary>
+								<ErrorBoundary>
+									<Alerts 
+										alerts={alerts}
+										currentConditions={currentConditions}
+										hourlyConditionsList={hourlyConditionsList}
+										nearestStormDirection={currentConditions.nearestStormDirection}
+										nearestStormDistance={currentConditions.nearestStormDistance}
+										openAlertModal={this.openAlertModal}
+										setCurrentAlert={this.setCurrentAlert}
+									/>
+								</ErrorBoundary>
 
-						<SectionDivider />
+								<SectionDivider />
 
-						<ErrorBoundary>
-							<Update 
-								errorMessage={errorMessage}
-								lastUpdatedAt={lastUpdatedAt}
-								fetchWeather={this.fetchWeather}
-								/>
-						</ErrorBoundary>
+								<ErrorBoundary>
+									<Update 
+										dataPresent={true}
+										errorMessage={errorMessage}
+										lastUpdatedAt={lastUpdatedAt}
+										fetchWeather={this.fetchWeather}
+										/>
+								</ErrorBoundary>
 
-						<ErrorBoundary>
-							<AlertModal
-								isOpen={alertModalIsOpen}
-								closeModal={this.closeAlertModal}
-								currentAlert={currentAlert}
-							/>
-						</ErrorBoundary>
+								<ErrorBoundary>
+									<AlertModal
+										isOpen={alertModalIsOpen}
+										closeModal={this.closeAlertModal}
+										currentAlert={currentAlert}
+									/>
+								</ErrorBoundary>
+							</>
+						}
 					</>
 				}
+				
       </div>
     );
   }
