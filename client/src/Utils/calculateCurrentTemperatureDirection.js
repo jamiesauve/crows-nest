@@ -5,6 +5,6 @@ export default (previousTemperature, currentTemperature) => {
 	
 	// within 0.1 degree is considered steady 
 	if (temperatureChange > 0.1) return "rising";
-	else if (temperatureChange < -0.1) return "rising";
+	else if (temperatureChange < -0.1) return "falling";
 	else return "steady";
 };
