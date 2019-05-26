@@ -4,10 +4,11 @@
 	background: #444;
 	border-radius: 0.5rem;
 	border: 2px solid $background-color; 
-	width: 25%;
+	min-width: 24%;
 	padding: 4px;
-	margin: 2px;
-	
+	margin: 0.5%;
+	white-space: nowrap;
+
 	.alert__time {
 		font-size: $font-size-s;
 		font-weight: bold;

@@ -1,8 +1,6 @@
 @import '../mixins/flex';
-@import '../mixins/section';
 
 @mixin side-scroll {
-	@include section-width;
 	@include flex-row;
 
 	justify-content: unset;
@@ -15,6 +13,7 @@
 	background: #444;
 	border-radius: 0.5rem;
 	border: 2px solid $background-color; 
-	width: 20%;
+	min-width: 20%;
 	padding: 2.2px;
+	white-space: nowrap;
 }
