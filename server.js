@@ -16,15 +16,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/api/hello', (req, res) => {
-	res.send({ serverSays: 'Hello from the back end!' });
-});
-
-app.post('/api/hi', (req, res) => {
-
-	res.send(`POST request received: ${req.body.message}`);
-});
-
 app.get('/api/getWeather', (req, res) => {
 	const {
 		lat,
