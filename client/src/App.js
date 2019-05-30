@@ -89,7 +89,7 @@ class App extends Component {
 
 		axios({
 			method: 'get',
-			url: 'http://localhost:4205/api/getWeather', 
+			url: process.env.REACT_APP_WEATHER_URL, 
 			params: {
 				lat,
 				lng
