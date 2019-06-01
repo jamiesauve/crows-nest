@@ -87,11 +87,13 @@ class App extends Component {
 			isFetching: true,
 		});
 
+		console.log('env', process.env.NODE_ENV)
+
 		axios({
 			method: 'get',
-			url: process.env.NODE_ENV === 'production'
-			? "https://secure-fortress-52545.herokuapp.com/api/getWeather?"
-			: "http://localhost:4205/api/getWeather", 
+			url: process.env.NODE_ENV === 'development'
+			? "http://localhost:4205/api/getWeather"
+			: "https://secure-fortress-52545.herokuapp.com/api/getWeather?",
 			params: {
 				lat,
 				lng
