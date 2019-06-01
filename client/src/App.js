@@ -89,8 +89,8 @@ class App extends Component {
 
 		axios({
 			method: 'get',
-			url: process.env.NODE_ENV = 'production'
-			? "https://secure-fortress-52545.herokuapp.com/api/getWeather"
+			url: process.env.NODE_ENV === 'production'
+			? "https://secure-fortress-52545.herokuapp.com/api/getWeather?"
 			: "http://localhost:4205/api/getWeather", 
 			params: {
 				lat,
