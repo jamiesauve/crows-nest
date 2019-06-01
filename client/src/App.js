@@ -87,11 +87,11 @@ class App extends Component {
 			isFetching: true,
 		});
 
-		console.log('env', process.env.NODE_ENV)
+		console.log('process.env.REACT_APP_ENV', process.env.REACT_APP_ENV);
 
 		axios({
 			method: 'get',
-			url: process.env.NODE_ENV === 'development'
+			url: process.env.REACT_APP_ENV === 'development'
 			? "http://localhost:4205/api/getWeather"
 			: "https://secure-fortress-52545.herokuapp.com/api/getWeather?",
 			params: {
