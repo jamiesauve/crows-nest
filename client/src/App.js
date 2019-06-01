@@ -87,8 +87,6 @@ class App extends Component {
 			isFetching: true,
 		});
 
-		console.log('process.env.REACT_APP_ENV', process.env.REACT_APP_ENV);
-
 		axios({
 			method: 'get',
 			url: process.env.REACT_APP_ENV === 'development'
